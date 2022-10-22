@@ -1,0 +1,24 @@
+{
+  "name": "cinephile-diary",
+  "version": "1.0.0",
+  "description": "Full-stack movie service",
+  "scripts": {
+    "start": "nodemon -r dotenv/config ./movie-service/src/server.js",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a-stanisz/cinephile-diary.git"
+  },
+  "keywords": [],
+  "author": "Adam Staniszewski",
+  "license": "MIT",
+  "dependencies": {
+    "auth-service": "file:services/auth-service",
+    "movie-service": "file:services/movie-service"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "jest": "^27.4.5"
+  }
+}

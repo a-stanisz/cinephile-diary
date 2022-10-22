@@ -1,0 +1,56 @@
+version: "3.2"
+services:
+  auth-service:
+    container_name: ${AUTH_SERVICE_NAME:-auth-service}
+    command: node src/server.js
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    ports:
+      - published: ${AUTH_SERVICE_PORT:-3000}
+        target: ${AUTH_SERVICE_PORT:-3000}
+    volumes:
+      - ./auth-service/:/app/
+      - /app/node_modules
+    environment:
+      AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT}
+      JWT_SECRET: ${JWT_SECRET}
+  movie-service:
+    container_name: ${MOVIE_SERVICE_NAME:-movie-service}
+    command: node src/server.js
+    build:
+      context: ./movie-service
+      dockerfile: Dockerfile
+    ports:
+      - ${MOVIE_SERVICE_PORT}:${MOVIE_SERVICE_PORT}
+      - 9229:9229
+      - 9230:9230
+    depends_on:
+      - auth-service
+      - mongodb
+    volumes:
+      - ./movie-service/volumes/:/app/volumes/
+      - /app/node_modules
+    environment:
+      AUTH_HOST: ${AUTH_SERVICE_NAME:-auth-service}
+      AUTH_PORT: ${AUTH_SERVICE_PORT}
+      MOVIE_SERVICE_PORT: ${MOVIE_SERVICE_PORT}
+      JWT_SECRET: ${JWT_SECRET}
+      OMDB_APIKEY: ${OMDB_APIKEY}
+      MONGODB_USERNAME: ${MONGODB_USERNAME}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+      DB_HOST: ${MONGODB_SERVICE_NAME:-mongodb}
+      DB_PORT: ${DB_PORT:-27017}
+      DB_NAME: ${EXAMPLE_DB_NAME}
+  mongodb:
+    container_name: ${MONGODB_SERVICE_NAME:-mongodb}
+    image: mongo
+    restart: always
+    ports:
+      - ${DB_PORT:-27017}:${DB_PORT:-27017}
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${EXAMPLE_DB_NAME:-example-database}
+    volumes:
+      - ./movie-service/volumes/:/app/volumes/
