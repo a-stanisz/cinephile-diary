@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Docker: Attach 9229 --inspect",
+      "type": "node",
+      "request": "attach",
+      "remoteRoot": "/app",
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}/services/movie-service",
+      "restart": true,
+    }
+  ]
+}
