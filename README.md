@@ -1,6 +1,6 @@
 # 🎬 Cinephile Diary
 
- **A movie service that creates, stores, and fetches movie records of the authenticated user.**
+ **A movie service that creates, stores, and presents movie records of the authenticated user.**
 
 ## 🌳 Project structure 
 
@@ -36,7 +36,7 @@ You need to provide environmental variables:
 MOVIE_SERVICE_NAME=movie-service
 MOVIE_SERVICE_PORT=3002
 AUTH_SERVICE_NAME=auth-service
-AUTH_SERVICE_PORT=3000
+AUTH_SERVICE_PORT=3001
 JWT_SECRET=<secret>
 MONGODB_SERVICE_NAME=mongodb
 DB_PORT=27017
@@ -62,7 +62,7 @@ Finally, you can run it with `docker-compose up`:
 JWT_SECRET=<secret> MONGODB_USERNAME=<db-username> MONGODB_PASSWORD=<password> OMDB_APIKEY=<your-omdb-apikey> docker-compose up -d
 ```
 
-To stop the services stack run:
+To stop the services-stack run:
 
 ```
 docker-compose down -v
@@ -73,7 +73,7 @@ Note that the project's containers use `anonymous volumes` that are newly create
 
 ### 👉🏽 Authorization service (`auth-service`) 
 
-To authorize users while sending requests to the `movie-service`, you need to provide the `<token>`. This is what the `auth-service` is for. Auth service is based on JWT tokens. By default it runs at the `PORT 3000`.
+To authorize users while sending requests to the `movie-service`, you need to provide the `<token>`. This is what the `auth-service` is for. Auth service is based on JWT tokens. By default it runs at the `PORT 3001`.
 
 To get the user's `<token>`, call the auth service at the `/auth` endpoint with the `POST` request and the request payload of `username` and `password`.
 
@@ -94,7 +94,7 @@ password: 'GBLtTyq3E_UNjFnpo9m6'
 ```
 The example request to get the `<token>` for `basic-thomas`, using `curl`:
 ```
-curl --location --request POST '0.0.0.0:3000/auth' \
+curl --location --request POST '0.0.0.0:3001/auth' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "username": "basic-thomas",
@@ -103,7 +103,7 @@ curl --location --request POST '0.0.0.0:3000/auth' \
 ```
 The example request to get the `<token>` for `premium-jim`, using `curl`:
 ```
-curl --location --request POST '0.0.0.0:3000/auth' \
+curl --location --request POST '0.0.0.0:3001/auth' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "username": "premium-jim",
