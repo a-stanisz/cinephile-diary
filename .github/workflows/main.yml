@@ -15,7 +15,7 @@ jobs:
       - name: Build & run the stack
         run: JWT_SECRET=$JWT_SECRET MONGODB_USERNAME=$MONGODB_USERNAME MONGODB_PASSWORD=$MONGODB_PASSWORD OMDB_APIKEY=$OMDB_APIKEY docker-compose up --build -d
         env:
-          AUTH_SERVICE_PORT: 3000
+          AUTH_SERVICE_PORT: 3001
           MOVIE_SERVICE_PORT: 3002
           EXAMPLE_DB_NAME: "example-database"
 
@@ -26,6 +26,6 @@ jobs:
           MONGODB_USERNAME: $MONGODB_USERNAME
           MONGODB_PASSWORD: $MONGODB_PASSWORD
           OMDB_APIKEY: $OMDB_APIKEY
-          AUTH_SERVICE_PORT: 3000
+          AUTH_SERVICE_PORT: 3001
           MOVIE_SERVICE_PORT: 3002
           EXAMPLE_DB_NAME: "example-database"

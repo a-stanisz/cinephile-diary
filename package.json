@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Full-stack movie service",
   "scripts": {
-    "start": "nodemon -r dotenv/config ./movie-service/src/server.js",
+    "start": "nodemon -r dotenv/config ./services/movie-service/src/server.js",
     "test": "jest"
   },
   "repository": {
