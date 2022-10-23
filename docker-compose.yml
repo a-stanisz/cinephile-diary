@@ -1,47 +1,45 @@
-version: "3.2"
 services:
   auth-service:
     container_name: ${AUTH_SERVICE_NAME:-auth-service}
-    command: node src/server.js
     build:
-      context: ./auth-service
+      context: ./services/auth-service
       dockerfile: Dockerfile
     ports:
-      - published: ${AUTH_SERVICE_PORT:-3000}
-        target: ${AUTH_SERVICE_PORT:-3000}
+      - ${AUTH_SERVICE_PORT:-3001}:${AUTH_SERVICE_PORT:-3001}
     volumes:
-      - ./auth-service/:/app/
+      - ./services/auth-service/:/app/
       - /app/node_modules
     environment:
-      AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT}
+      AUTH_SERVICE_PORT: ${AUTH_SERVICE_PORT:-3001}
       JWT_SECRET: ${JWT_SECRET}
+    command: node src/server.js
   movie-service:
     container_name: ${MOVIE_SERVICE_NAME:-movie-service}
-    command: node src/server.js
     build:
-      context: ./movie-service
+      context: ./services/movie-service
       dockerfile: Dockerfile
     ports:
-      - ${MOVIE_SERVICE_PORT}:${MOVIE_SERVICE_PORT}
+      - ${MOVIE_SERVICE_PORT:-3002}:${MOVIE_SERVICE_PORT:-3002}
       - 9229:9229
       - 9230:9230
     depends_on:
       - auth-service
       - mongodb
     volumes:
-      - ./movie-service/volumes/:/app/volumes/
+      - ./services/movie-service/volumes/:/app/volumes/
       - /app/node_modules
     environment:
       AUTH_HOST: ${AUTH_SERVICE_NAME:-auth-service}
-      AUTH_PORT: ${AUTH_SERVICE_PORT}
-      MOVIE_SERVICE_PORT: ${MOVIE_SERVICE_PORT}
+      AUTH_PORT: ${AUTH_SERVICE_PORT:-3001}
+      MOVIE_SERVICE_PORT: ${MOVIE_SERVICE_PORT:-3002}
       JWT_SECRET: ${JWT_SECRET}
       OMDB_APIKEY: ${OMDB_APIKEY}
       MONGODB_USERNAME: ${MONGODB_USERNAME}
       MONGODB_PASSWORD: ${MONGODB_PASSWORD}
       DB_HOST: ${MONGODB_SERVICE_NAME:-mongodb}
       DB_PORT: ${DB_PORT:-27017}
-      DB_NAME: ${EXAMPLE_DB_NAME}
+      DB_NAME: ${EXAMPLE_DB_NAME:-example-database}
+    command: node src/server.js
   mongodb:
     container_name: ${MONGODB_SERVICE_NAME:-mongodb}
     image: mongo
@@ -53,4 +51,4 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
       MONGO_INITDB_DATABASE: ${EXAMPLE_DB_NAME:-example-database}
     volumes:
-      - ./movie-service/volumes/:/app/volumes/
+      - ./services/movie-service/volumes/:/app/volumes/

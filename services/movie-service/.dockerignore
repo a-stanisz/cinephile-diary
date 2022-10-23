@@ -1,4 +1,11 @@
-.git
-*DOCKERFILE*
-*docker-compose*
-node_modules
+**/.env
+**/.git
+**/.gitignore
+**/.vs
+**/.vscode
+**/docker-compose*
+**/compose*
+**/Dockerfile*
+**/node_modules
+**/npm-debug.log
+README.md
