@@ -1,10 +1,12 @@
 const User = require('../models/user');
 const Movie = require('../models/movie');
 
+const getMovieData = require('./getMovieData');
+
 const basicUsersServiceUsageLimit = 5;
 
 exports.postMovie = async (req, res, next) => {
-  if (!req.user || !req.movieData) {
+  if (!req.user || !req.searchStr) {
     const error = new Error('Not Found!');
     error.statusCode = 404;
     throw error;
@@ -12,6 +14,7 @@ exports.postMovie = async (req, res, next) => {
   const userId = req.user.userId;
   const userName = req.user.userName;
   const userRole = req.user.userRole;
+  const movieTitle = req.searchStr;
   try {
     let user;
     user = await User.findOne({ userId: userId });
@@ -39,12 +42,7 @@ exports.postMovie = async (req, res, next) => {
         mesage: `The User has reached the limit of ${user.serviceUsage.limit} movie-entries per calendar month!`
       });
     } else {
-      const entry = {
-        title: req.movieData.title,
-        releaseDate: req.movieData.releaseDate,
-        genre: req.movieData.genre,
-        director: req.movieData.director,
-      }
+      const entry = await getMovieData(movieTitle);
       const movieEntry = new Movie(entry);
       await movieEntry.save();
       user.diaryEntries.push(movieEntry);
