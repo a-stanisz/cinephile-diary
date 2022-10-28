@@ -1,23 +1,22 @@
 const omdb = require('../api/omdb');
 
-module.exports = async (req, res, next) => {
+module.exports = async (movieToSearch) => {
   try {
-    const movieToSearch = req.searchStr;
     const movieData = await omdb(movieToSearch);
     if (!movieData.Title) {
       const error = new Error('Not Found!');
       error.statusCode = 404;
       throw error.message;
     }
-    req.movieData = {
+    const movieObj = {
       title: movieData.Title,
       releaseDate: movieData.Released,
       genre: movieData.Genre,
       director: movieData.Director,
     };
+    return movieObj;
   } catch (err) {
     err.statusCode = 500;
     throw err;
   };
-  next();
 }
