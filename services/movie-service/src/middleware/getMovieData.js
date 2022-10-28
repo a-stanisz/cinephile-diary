@@ -1,4 +1,4 @@
-const omdb = require('../services/omdb');
+const omdb = require('../api/omdb');
 
 module.exports = async (req, res, next) => {
   try {
