@@ -4,7 +4,7 @@ const basicUsersServiceUsageLimit = 5;
 
 module.exports = async (req, res, next) => {
   try {
-    if (!req.tokenData) {
+    if (!req.user) {
       const error = new Error("Not Found!");
       error.statusCode = 404;
       throw error;
@@ -13,9 +13,9 @@ module.exports = async (req, res, next) => {
     user = await User.findOne({ userId: userId });
     if (!user) {
       user = new User({
-        userId: req.tokenData.userId,
-        userName: req.tokenData.name,
-        userRole: req.tokenData.role,
+        userId: req.user.userId,
+        userName: req.user.name,
+        userRole: req.user.role,
       });
       let limitation;
       user.userRole === "basic" ? (limitation = true) : (limitation = false);
@@ -25,10 +25,10 @@ module.exports = async (req, res, next) => {
         user.serviceUsage.counter = 0;
       }
       await user.save();
-      console.log('User verification: user not found. New user created!');
+      console.log("User verification: user not found. New user created!");
     }
     req.user = user;
-    console.log('User verification: passed');
+    console.log("User verification: passed");
   } catch (err) {
     err.statusCode = 500;
     throw err;
