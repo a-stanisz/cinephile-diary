@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "properties": {
+    "title": { "type": "string" },
+    "releaseDate": { "type": "string", "format": "date" },
+    "genre": { "type": "string" },
+    "director": { "type": "string" }
+  },
+  "required": ["title"]
+}
