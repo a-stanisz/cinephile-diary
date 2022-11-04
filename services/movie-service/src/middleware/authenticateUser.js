@@ -18,6 +18,7 @@ module.exports = async (req, res, next) => {
       throw error.message;
     }
     req.tokenData = decodedToken;
+    console.log('User authentication: passed')
   } catch (err) {
     err.statusCode = 500;
     throw err;
