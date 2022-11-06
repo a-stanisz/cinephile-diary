@@ -12,20 +12,22 @@ class AuthenticationError extends Error {
 module.exports = async (req, res, next) => {
   try {
     const authHeader = req.get("Authorization");
-    if (authHeader !== undefined) {
-      const providedToken = authHeader.split(" ")[1];
-      const decodedToken = jwt.verify(String(providedToken), JWT_SECRET);
-      if (decodedToken) {
-        req.user = decodedToken;
-        console.log("User authentication: passed");
-      }
-      next();
+    if (!authHeader) {
+      throw new AuthenticationError("Invalid auth header!");
     }
-    throw new AuthenticationError();
+    const providedToken = authHeader.split(" ")[1];
+    const decodedToken = jwt.verify(String(providedToken), JWT_SECRET);
+    if (!decodedToken) {
+      throw new AuthenticationError("Invalid credentials!");
+    }
+    req.user = decodedToken;
+    console.log("User authentication: passed");
   } catch (error) {
     if (error instanceof AuthenticationError) {
       return res.status(401).json({ error: error.message });
     }
+    console.error(error);
     next(error);
   }
+  next();
 };

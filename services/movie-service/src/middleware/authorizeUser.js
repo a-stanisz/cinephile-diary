@@ -17,11 +17,11 @@ module.exports = async (req, res, next) => {
       );
     }
     console.log("User authorization: passed");
+    next();
   } catch (error) {
     if (error instanceof AuthorizationError) {
       return res.status(402).json({ error: error.message });
     }
     next(error);
   }
-  next();
 };
