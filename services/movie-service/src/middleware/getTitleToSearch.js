@@ -3,7 +3,7 @@ module.exports = async (req, res, next) => {
     if (!req.body) {
       return res.status(400).json({ error: "invalid payload" });
     }
-    const { title } = req.body.title;
+    const { title } = req.body;
     if (!title) {
       return res.status(400).json({ error: "invalid payload" });
     }
