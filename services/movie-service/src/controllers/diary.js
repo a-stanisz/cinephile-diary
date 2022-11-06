@@ -4,14 +4,9 @@ const Movie = require("../models/movie");
 const getMovieData = require("./getMovieData");
 
 exports.postMovie = async (req, res, next) => {
-  if (!req.user || !req.searchStr) {
-    const error = new Error("Not Found!");
-    error.statusCode = 404;
-    throw error;
-  }
-  const movieTitle = req.searchStr;
-  let user = req.user;
   try {
+    const movieTitle = req.searchStr;
+    let user = req.user;
     const entry = await getMovieData(movieTitle);
     const movieEntry = new Movie(entry);
     await movieEntry.save();
@@ -27,13 +22,8 @@ exports.postMovie = async (req, res, next) => {
 };
 
 exports.getUserMovies = async (req, res, next) => {
-  if (!req.user) {
-    const error = new Error("Not Found!");
-    error.statusCode = 404;
-    throw error;
-  }
-  const userId = req.user.userId;
   try {
+    const userId = req.user.userId;
     let user;
     user = await User.findOne({ userId: userId });
     if (!user) {
