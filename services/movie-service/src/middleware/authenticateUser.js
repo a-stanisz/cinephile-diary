@@ -19,6 +19,7 @@ module.exports = async (req, res, next) => {
         req.user = decodedToken;
         console.log("User authentication: passed");
       }
+      next();
     }
     throw new AuthenticationError();
   } catch (error) {
@@ -27,5 +28,4 @@ module.exports = async (req, res, next) => {
     }
     next(error);
   }
-  next();
 };
