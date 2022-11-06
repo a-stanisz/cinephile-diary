@@ -13,7 +13,7 @@ module.exports = async (req, res, next) => {
       user.serviceUsage.counter >= user.serviceUsage.limit
     ) {
       throw new AuthorizationError(
-        `usage limit of ${user.serviceUsage.limit} entries/month has been reached!`
+        `Usage limit of ${user.serviceUsage.limit} entries per month has been reached!`
       );
     }
     console.log("User authorization: passed");

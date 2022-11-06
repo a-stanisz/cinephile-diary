@@ -53,5 +53,4 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
       MONGO_INITDB_DATABASE: ${EXAMPLE_DB_NAME:-example-database}
-    volumes:
-      - ./services/movie-service/volumes/:/app/volumes/
+      
