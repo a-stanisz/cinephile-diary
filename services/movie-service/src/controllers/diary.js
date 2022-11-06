@@ -11,6 +11,9 @@ exports.postMovie = async (req, res, next) => {
     const movieEntry = new Movie(entry);
     await movieEntry.save();
     user.diaryEntries.push(movieEntry);
+    if (!user.serviceUsage.counter) {
+      user.serviceUsage.counter = 0;
+    }
     user.serviceUsage.counter++;
     await user.save();
     res.status(200).json({
