@@ -1,22 +1,21 @@
-const omdb = require('../external-apis/omdb');
+const omdb = require("../external-apis/omdb");
 
 module.exports = async (movieToSearch) => {
   try {
-    const movieData = await omdb(movieToSearch);
-    if (!movieData.Title) {
-      const error = new Error('Not Found!');
-      error.statusCode = 404;
-      throw error.message;
+    let success;
+    const data = await omdb(movieToSearch);
+    data.Response === "True" ? (success = true) : (success = false);
+    if (success) {
+      const movieObj = {
+        title: data.Title,
+        releaseDate: data.Released,
+        genre: data.Genre,
+        director: data.Director,
+      };
+      return movieObj;
     }
-    const movieObj = {
-      title: movieData.Title,
-      releaseDate: movieData.Released,
-      genre: movieData.Genre,
-      director: movieData.Director,
-    };
-    return movieObj;
-  } catch (err) {
-    err.statusCode = 500;
-    throw err;
-  };
-}
+    throw new Error(`OMDB API Error: ${data.Error}`);
+  } catch (error) {
+    console.error(error);
+  }
+};

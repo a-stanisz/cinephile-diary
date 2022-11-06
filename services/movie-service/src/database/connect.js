@@ -24,8 +24,8 @@ const connect = async () => {
       userRole: 'placeholder',
     });
     placeholderUser.save();
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.error(error)
   }
 }
 

@@ -1,6 +1,6 @@
 const express = require("express");
-const authenticate = require("../middleware/authenticate");
-const authenticationError = require("../middleware/authenticationError");
+
+const authenticateUser = require("../middleware/authenticateUser");
 const updateUser = require("../middleware/updateUser");
 const authorizeUser = require("../middleware/authorizeUser");
 const getTitleToSearch = require("../middleware/getTitleToSearch");
@@ -10,8 +10,7 @@ const router = express.Router();
 
 router.post(
   "/movies",
-  authenticate,
-  authenticationError,
+  authenticateUser,
   updateUser,
   authorizeUser,
   getTitleToSearch,
@@ -20,8 +19,7 @@ router.post(
 
 router.get(
   "/movies",
-  authenticate,
-  authenticationError,
+  authenticateUser,
   updateUser,
   diaryController.getUserMovies
 );

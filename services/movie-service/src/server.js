@@ -10,6 +10,15 @@ const diaryRoutes = require('./routes/diary');
 const app = express();
 
 app.use(express.json());
+
+app.use((error, _, res, __) => {
+  console.error(
+    `Error processing request ${error}. See next message for details`
+  );
+  console.error(error);
+  return res.status(500).json({ error: "internal server error" });
+});
+
 app.use('/', diaryRoutes);
 
 app.get('/', (req, res, next) => {

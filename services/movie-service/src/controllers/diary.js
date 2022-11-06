@@ -22,10 +22,6 @@ exports.postMovie = async (req, res, next) => {
       message: `Movie: <<${entry.title}>> has been added to the User's Cinephile Diary!`,
     });
   } catch (err) {
-    console.log(err);
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
     next(err);
   }
 };
@@ -50,11 +46,7 @@ exports.getUserMovies = async (req, res, next) => {
       message: `Cinephile Diary entries of the User retrieved!`,
       userMovies: userMovies,
     });
-  } catch (err) {
-    console.log(err);
-    if (!err.statusCode) {
-      err.statusCode = 500;
-    }
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };

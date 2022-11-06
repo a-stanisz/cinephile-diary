@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
       throw error;
     }
     let user;
-    user = await User.findOne({ userId: userId });
+    user = await User.findOne({ userId: req.user.userId });
     if (!user) {
       user = new User({
         userId: req.user.userId,
@@ -25,13 +25,12 @@ module.exports = async (req, res, next) => {
         user.serviceUsage.counter = 0;
       }
       await user.save();
-      console.log("User verification: user not found. New user created!");
+      console.log("User updated");
     }
     req.user = user;
-    console.log("User verification: passed");
+    console.log("User verified");
   } catch (err) {
-    err.statusCode = 500;
-    throw err;
+    next();
   }
   next();
 };

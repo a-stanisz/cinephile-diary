@@ -1,16 +1,15 @@
 module.exports = async (req, res, next) => {
   try {
     if (!req.body) {
-      return res.status(400).json({ error: "invalid body" });
+      return res.status(400).json({ error: "invalid payload" });
     }
-    const title = req.body.title;
+    const { title } = req.body.title;
     if (!title) {
-      return res.status(400).json({ error: "invalid title" });
+      return res.status(400).json({ error: "invalid payload" });
     }
     req.searchStr = title;
-  } catch (err) {
-    err.statusCode = 500;
-    throw err;
+  } catch (error) {
+    next();
   }
   next();
 };
