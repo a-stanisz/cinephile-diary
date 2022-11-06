@@ -1,4 +1,4 @@
-const omdb = require('../api/omdb');
+const omdb = require('../external-apis/omdb');
 
 module.exports = async (movieToSearch) => {
   try {
