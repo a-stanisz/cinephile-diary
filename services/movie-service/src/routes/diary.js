@@ -1,6 +1,7 @@
 const express = require("express");
 
-const authenticateUser = require("../middleware/authenticateUser");
+const authenticateToken = require("../middleware/authenticateToken");
+const validateToken = require("../middleware/validateToken");
 const updateUser = require("../middleware/updateUser");
 const authorizeUser = require("../middleware/authorizeUser");
 const getTitleToSearch = require("../middleware/getTitleToSearch");
@@ -10,7 +11,8 @@ const router = express.Router();
 
 router.post(
   "/movies",
-  authenticateUser,
+  authenticateToken,
+  validateToken,
   updateUser,
   authorizeUser,
   getTitleToSearch,
@@ -19,7 +21,8 @@ router.post(
 
 router.get(
   "/movies",
-  authenticateUser,
+  authenticateToken,
+  validateToken,
   updateUser,
   diaryController.getUserMovies
 );
