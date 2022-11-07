@@ -1,12 +1,13 @@
 {
   "type": "object",
+  "definitions": {},
   "properties": {
     "userId": { "type": "number" },
     "name": { "type": "string" },
     "role": { "type": "string" },
     "movies": {
       "type": "array",
-      "items": { "$ref": "./movie.schema" }
+      "items": { "$ref": "movieSchema" }
     },
     "serviceUsage": {
       "type": "object",
@@ -17,5 +18,5 @@
       }
     }
   },
-  "required": ["userId", "role"]
+  "required": ["userId", "name", "role"]
 }
