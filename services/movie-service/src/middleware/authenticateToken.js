@@ -16,12 +16,12 @@ module.exports = async (req, res, next) => {
     }
     const providedToken = authHeader.split(" ")[1];
     req.decodedToken = jwt.verify(String(providedToken), JWT_SECRET);
-    if (!decodedToken) {
+    if (!req.decodedToken) {
       throw new AuthenticationError("invalid token");
     }
   } catch (error) {
     if (error instanceof AuthenticationError) {
-      return res.status(401).json({ error: error.message });
+      res.status(401).json({ error: error.message });
     }
     console.error(error);
     next(error);
