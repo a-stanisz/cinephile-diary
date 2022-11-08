@@ -4,11 +4,6 @@ const basicUsersServiceUsageLimit = 5;
 
 module.exports = async (req, res, next) => {
   try {
-    if (!req.user) {
-      const error = new Error("Not Found!");
-      error.statusCode = 404;
-      throw error;
-    }
     let user;
     user = await User.findOne({ userId: req.user.userId });
     if (!user) {
@@ -28,7 +23,6 @@ module.exports = async (req, res, next) => {
       console.log("User updated");
     }
     req.user = user;
-    console.log("User verified");
   } catch (err) {
     next();
   }
