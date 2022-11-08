@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "definitions": {},
+  "properties": {
+    "userId": { "type": "number" },
+    "name": { "type": "string" },
+    "role": { "type": "string" },
+    "movies": {
+      "type": "array",
+      "items": { "$ref": "movieSchema" }
+    },
+    "serviceUsage": {
+      "type": "object",
+      "properties": {
+        "isLimited": { "type": "boolean" },
+        "limit": { "type": "number" },
+        "counter": { "type": "number" }
+      }
+    }
+  },
+  "required": ["userId", "name", "role"]
+}

@@ -5,10 +5,10 @@
       "name": "Docker: Attach 9229 --inspect",
       "type": "node",
       "request": "attach",
-      "remoteRoot": "/app",
+      "remoteRoot": "/app/src",
       "port": 9229,
       "address": "localhost",
-      "localRoot": "${workspaceFolder}/services/movie-service",
+      "localRoot": "${workspaceFolder}/services/movie-service/src",
       "restart": true,
     }
   ]

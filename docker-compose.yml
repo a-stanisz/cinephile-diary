@@ -18,6 +18,8 @@ services:
     build:
       context: ./services/movie-service
       dockerfile: Dockerfile
+      args:
+        - NODE_ENV=development
     ports:
       - ${MOVIE_SERVICE_PORT:-3002}:${MOVIE_SERVICE_PORT:-3002}
       - 9229:9229
@@ -27,6 +29,7 @@ services:
       - mongodb
     volumes:
       - ./services/movie-service/volumes/:/app/volumes/
+      - ./services/movie-service/src/:/app/src/
       - /app/node_modules
     environment:
       AUTH_HOST: ${AUTH_SERVICE_NAME:-auth-service}
@@ -39,7 +42,7 @@ services:
       DB_HOST: ${MONGODB_SERVICE_NAME:-mongodb}
       DB_PORT: ${DB_PORT:-27017}
       DB_NAME: ${EXAMPLE_DB_NAME:-example-database}
-    command: node src/server.js
+    command: nodemon --trace-warnings --inspect=0.0.0.0:9229 src/server.js
   mongodb:
     container_name: ${MONGODB_SERVICE_NAME:-mongodb}
     image: mongo
@@ -50,5 +53,4 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
       MONGO_INITDB_DATABASE: ${EXAMPLE_DB_NAME:-example-database}
-    volumes:
-      - ./services/movie-service/volumes/:/app/volumes/
+      

@@ -1,14 +1,14 @@
-const mongoose = require('mongoose');
-const User = require('../models/user');
+const mongoose = require("mongoose");
+const User = require("../models/user");
 
-mongoose.set('debug', true);
+mongoose.set("debug", true);
 
 const {
   MONGODB_USERNAME,
   MONGODB_PASSWORD,
   DB_HOST,
   DB_PORT,
-  DB_NAME,
+  DB_NAME
 } = process.env;
 
 const connect = async () => {
@@ -19,14 +19,18 @@ const connect = async () => {
     console.error(err);
   }
   try {
-    placeholderUser = new User({
-      userId: 0,
-      userRole: 'placeholder',
-    });
+    let placeholderUser;
+    placeholderUser = await User.findOne({ userRole: "placeholder" });
+    if (!placeholderUser) {
+      placeholderUser = new User({
+        userId: 0,
+        userRole: "placeholder",
+      });
+    }
     placeholderUser.save();
-  } catch (err) {
-    console.log(err)
+  } catch (error) {
+    console.error(error);
   }
-}
+};
 
 module.exports = connect;
