@@ -28,7 +28,6 @@ services:
       - auth-service
       - mongodb
     volumes:
-      - ./services/movie-service/volumes/:/app/volumes/
       - ./services/movie-service/src/:/app/src/
       - /app/node_modules
     environment:
