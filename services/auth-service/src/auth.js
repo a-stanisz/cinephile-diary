@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 
+const EXPIRE = Number(process.env.TEST_TOKEN_EXPIRES_IN_HOURS) || .5;
+
 const users = [
   {
     id: 123,
@@ -36,7 +38,7 @@ const authFactory = (secret) => (username, password) => {
     {
       issuer: "https://www.netguru.com/",
       subject: `${user.id}`,
-      expiresIn: 30 * 60,
+      expiresIn: EXPIRE * 60 * 60,
     }
   );
 };
