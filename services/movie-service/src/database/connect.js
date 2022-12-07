@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("../models/user");
 
-mongoose.set("debug", true);
+mongoose.set("debug", false);
 
 const {
   MONGODB_USERNAME,

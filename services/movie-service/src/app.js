@@ -2,8 +2,11 @@ const express = require("express");
 const { ValidationError } = require("express-json-validator-middleware");
 const diaryRoutes = require("./routes/diary");
 const app = express();
+const dbConnect = require("./database/connect");
 
 app.use(express.json());
+
+app.use("/", diaryRoutes);
 
 app.use((error, _, res, __) => {
   try {
@@ -26,10 +29,10 @@ app.use((error, _, res, __) => {
   return res.status(500).json({ error: "internal server error" });
 });
 
-app.use("/", diaryRoutes);
-
 app.get("/", (req, res, next) => {
   res.send("You are accessing the root route of the movie-service. Hello!");
 });
+
+dbConnect();
 
 module.exports = app;
