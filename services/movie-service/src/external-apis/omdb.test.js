@@ -1,34 +1,22 @@
-const omdb = require('./omdb');
-const axios = require('axios');
-const { OMDB_APIKEY } = process.env;
+const omdb = require("./omdb");
+const expect = require("chai").expect;
 
-jest.mock('axios');
+describe("External OMDB API call", () => {
+  const testTitle = "Dune";
+  const mockedResponseObj = {
+    Title: "Dune",
+    Released: "22 Oct 2021",
+    Genre: "Action, Adventure, Drama",
+    Director: "Denis Villeneuve",
+    Response: "True",
+  };
 
-describe('fetchData', () => {
-  it('success on fetching data from the OMDB API', async () => {
-    const title = 'Hobbit';
-    const resData = {
-      Title: 'The Hobbit: An Unexpected Journey',
-      Released: '14 Dec 2012',
-      Genre: 'Adventure, Fantasy',
-      Director: 'Peter Jackson',
-    }
+  it("should successfully fetch movie data", async () => {
     try {
-      axios.get.mockImplementationOnce(() => Promise.resolve({data: resData}));
-      await expect(omdb(title)).resolves.toMatchObject(resData);
-      expect(axios.get).toHaveBeenCalledWith(
-        `http://www.omdbapi.com/?apikey=${OMDB_APIKEY}&t=${title}`
-      );
-    } catch (err) {
-      console.log(err);
+      const movie = await omdb(testTitle);
+      expect(movie).to.include.keys(Object.keys(mockedResponseObj));
+    } catch (error) {
+      console.log(error);
     }
-  });
-
-  it('failure on fetching data from the OMDB API', async () => {
-    const errorMessage = 'Network Error';
-
-    axios.get.mockImplementationOnce(() =>
-      Promise.reject(new Error(errorMessage)),
-    );
   });
 });
