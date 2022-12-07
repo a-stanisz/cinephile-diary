@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "description": "Full-stack movie service",
   "scripts": {
-    "start": "npm run host:start",
+    "start": "nodemon -r dotenv/config ./services/movie-service/src/server.js",
     "test": "npm run docker:test",
-    "regen": "npm run docker:regen",
-    "host:test": "jest",
-    "host:start": "nodemon -r dotenv/config ./services/movie-service/src/server.js",
     "docker:test": "docker compose exec movie-service npm run test",
-    "docker:regen": "docker compose build && docker compose down -v && docker compose up -d"
+    "regen": "npm run docker:regen",
+    "docker:regen": "docker compose build && docker compose down -v && docker compose up -d",
+    "maintenance:delete-node-modules": "find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +"
   },
   "repository": {
     "type": "git",
@@ -23,8 +22,10 @@
     "movie-service": "file:services/movie-service"
   },
   "devDependencies": {
+    "chai": "^4.3.7",
     "dotenv": "^10.0.0",
     "jest": "^27.4.5",
+    "mocha": "^10.1.0",
     "supertest": "^6.3.1"
   }
 }
