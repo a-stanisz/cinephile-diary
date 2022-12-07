@@ -20,7 +20,6 @@ module.exports = async (req, res, next) => {
         user.serviceUsage.counter = 0;
       }
       await user.save();
-      console.log("User updated");
     }
     req.user = user;
   } catch (err) {
