@@ -1,15 +1,17 @@
 const { Validator } = require("express-json-validator-middleware");
 const validator = new Validator();
-const userSchema = require("../domain/user.schema.json");
-validator.ajv.addSchema(userSchema, "userSchema");
-const movieSchema = require("../domain/movie.schema.json");
+const movieSchema = require("../../domain/movie.schema.json");
 validator.ajv.addSchema(movieSchema, "movieSchema");
 
 module.exports = async (req, res, next) => {
   try {
-    const token = req.decodedToken;
-    validator.validate({ token: userSchema });
-    req.user = token;
+    const body = req.body;
+    if (!req.body) {
+      return res.status(400).json({ error: "invalid payload" });
+    }
+    const title = body.title;
+    validator.validate({ title: movieSchema });
+    req.searchStr = title;
   } catch (error) {
     console.error(error);
     next(error);

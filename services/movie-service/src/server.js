@@ -1,8 +1,5 @@
-const app = require("./app");
-// const dbConnect = require("./database/connect");
+const app = require("./api/expressApp");
 const resetLimitCounters = require("./workers/resetCounter");
-
-// dbConnect();
 
 const PORT = process.env.MOVIE_SERVICE_PORT || 8080;
 

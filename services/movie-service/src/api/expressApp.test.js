@@ -1,5 +1,5 @@
 const expect = require("chai").expect;
-const app = require("./app");
+const app = require("./expressApp");
 const request = require("supertest");
 
 const { TEST_TOKEN_BASIC_USER, TEST_TOKEN_PREMIUM_USER } = process.env;

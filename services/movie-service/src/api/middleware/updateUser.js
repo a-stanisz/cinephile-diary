@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../../data-access/models/user");
 
 const basicUsersServiceUsageLimit = 5;
 
