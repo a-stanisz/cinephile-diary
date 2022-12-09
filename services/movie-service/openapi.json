@@ -1,0 +1,378 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Cinephile Diary",
+    "description": "This is the API docs of the Cinephile Diary.",
+    "termsOfService": "http://swagger.io/terms/",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "paths": {
+    "/movie/{movieId}": {
+      "get": {
+        "summary": "Get a movie by ID",
+        "description": "Returns a single movie entry",
+        "operationId": "getMovieById",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "movieId",
+            "in": "path",
+            "description": "ID of a movie entry to return",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "message": "successfully fetched a movie entry",
+                  "$ref": "#/components/schemas/Movie"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid movieId",
+            "$ref": "#/components/responses/RequestError"
+          },
+          "401": {
+            "description": "Authentication failed",
+            "$ref": "#/components/responses/UserAuthenticationError"
+          },
+          "404": {
+            "description": "Movie not found",
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "default": {
+            "description": "Unknown error occured",
+            "$ref": "#/components/responses/UnknownError"
+          }
+        }
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "summary": "Get an User by ID",
+        "description": "Returns a User of specified ID",
+        "operationId": "getUserById",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of an User",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "message": "successfully fetched a User",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid userId",
+            "$ref": "#/components/responses/RequestError"
+          },
+          "401": {
+            "description": "Authentication failed",
+            "$ref": "#/components/responses/UserAuthenticationError"
+          },
+          "404": {
+            "description": "User not found",
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "default": {
+            "description": "Unknown error occured",
+            "$ref": "#/components/responses/UnknownError"
+          }
+        }
+      }
+    },
+    "/user/{userId}/movies": {
+      "get": {
+        "summary": "Get movies of an User",
+        "description": "Returns all movies of a particular User",
+        "operationId": "getUserMovies",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of an User",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "message": "successfully fetched the User's movies",
+                  "$ref": "#/components/schemas/MovieList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid userId",
+            "$ref": "#/components/responses/RequestError"
+          },
+          "401": {
+            "description": "Authentication failed",
+            "$ref": "#/components/responses/UserAuthenticationError"
+          },
+          "404": {
+            "description": "User not found",
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "default": {
+            "description": "Unknown error occured",
+            "$ref": "#/components/responses/UnknownError"
+          }
+        }
+      }
+    },
+    "/user/{userId}/movie": {
+      "post": {
+        "summary": "Add a new movie entry",
+        "description": "Returns a single movie entry",
+        "operationId": "addMovie",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of an User",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "New Movie To Add",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Query"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "message": "successfully added a new movie entry",
+                  "$ref": "#/components/schemas/Movie"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid payload",
+            "$ref": "#/components/responses/RequestError"
+          },
+          "401": {
+            "description": "Authentication failed",
+            "$ref": "#/components/responses/UserAuthenticationError"
+          },
+          "403": {
+            "description": "Authorization error",
+            "$ref": "#/components/responses/UserAuthorizationError"
+          },
+          "404": {
+            "description": "Resource not found",
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "default": {
+            "description": "Unknown error occured",
+            "$ref": "#/components/responses/UnknownError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "responses": {
+      "RequestError": {
+        "description": "400 Bad Request",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "UserAuthenticationError": {
+        "description": "401 Unauthorized",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "UserAuthorizationError": {
+        "description": "403 Forbidden",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "404 Not Found",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "UnknownError": {
+        "description": "500 Internal Server Error",
+        "content": {
+          "application/problem+json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Movie": {
+        "type": "object",
+        "required": ["movieId", "title"],
+        "properties": {
+          "movieId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "title": {
+            "type": "string",
+            "format": "string"
+          },
+          "releaseDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "genre": {
+            "type": "string",
+            "format": "string"
+          },
+          "director": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      },
+      "MovieList": {
+        "type": "array",
+        "items": { "$ref": "#/components/schemas/Movie" }
+      },
+      "User": {
+        "type": "object",
+        "required": ["userId", "username", "role"],
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "username": {
+            "type": "string",
+            "format": "string"
+          },
+          "role": {
+            "type": "string",
+            "format": "string"
+          },
+          "movies": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Movie" }
+          }
+        }
+      },
+      "Query": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "format": "string"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "required": ["type", "title", "response"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "url"
+          },
+          "title": {
+            "type": "string",
+            "format": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "instance": {
+            "type": "string",
+            "format": "url"
+          },
+          "extension": {
+            "type": "object"
+          },
+          "response": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
