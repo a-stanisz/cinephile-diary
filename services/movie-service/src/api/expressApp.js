@@ -2,7 +2,7 @@ const express = require("express");
 const { ValidationError } = require("express-json-validator-middleware");
 const diaryRoutes = require("./routes");
 const app = express();
-const dbConnect = require("../data-access/dbConnect");
+const dbConnect = require("../database/dbConnect");
 
 app.use(express.json());
 

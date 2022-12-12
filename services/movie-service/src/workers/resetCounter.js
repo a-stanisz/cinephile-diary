@@ -1,4 +1,4 @@
-const User = require('../data-access/models/user');
+const User = require('../database/models/user');
 
 const triggerReset = async () => {
   const currentTime = new Date();

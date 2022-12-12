@@ -8,8 +8,8 @@ const getTitleToSearch = require("./middleware/getTitleToSearch");
 
 const router = express.Router();
 
-const User = require("../data-access/models/user");
-const Movie = require("../data-access/models/movie");
+const User = require("../database/models/user");
+const Movie = require("../database/models/movie");
 
 const getMovieData = require("../domain/getMovieData");
 
