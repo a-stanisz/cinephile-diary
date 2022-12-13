@@ -9,6 +9,7 @@
   "author": "Adam Staniszewski",
   "license": "",
   "dependencies": {
+    "ajv": "^8.11.2",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.2",
