@@ -8,7 +8,7 @@ app.use(express.json());
 
 app.use("/", diaryRoutes);
 
-app.use((error, _, res, __) => {
+app.use((error, _, res, next) => {
   try {
     if (res.headersSent) {
       return next(error);
