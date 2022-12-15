@@ -14,7 +14,7 @@ const Movie = require("../database/models/movie");
 const getMovieData = require("../domain/getMovieData");
 
 router.post(
-  "/movies",
+  "/api/v1/movie",
   authenticateToken,
   validateToken,
   updateUser,
@@ -43,7 +43,7 @@ router.post(
 );
 
 router.get(
-  "/movies",
+  "/api/v1/movies",
   authenticateToken,
   validateToken,
   updateUser,
