@@ -1,6 +1,6 @@
 const express = require("express");
 
-const authenticateToken = require("./middleware/authenticateToken");
+const jwtVerifier = require("./middleware/jwtVerifier");
 const validateToken = require("./middleware/validateToken");
 const updateUser = require("./middleware/updateUser");
 const authorizeUser = require("./middleware/authorizeUser");
@@ -15,7 +15,7 @@ const getMovieData = require("../domain/getMovieData");
 
 router.post(
   "/api/v1/movie",
-  authenticateToken,
+  jwtVerifier,
   validateToken,
   updateUser,
   authorizeUser,
@@ -44,7 +44,7 @@ router.post(
 
 router.get(
   "/api/v1/movies",
-  authenticateToken,
+  jwtVerifier,
   validateToken,
   updateUser,
   async (req, res, next) => {
