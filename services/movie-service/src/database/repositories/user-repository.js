@@ -1,5 +1,27 @@
 const User = require("../models/user");
 
+module.exports = async function createUser(userData) {
+  try {
+    let user;
+    user = new User({
+      userId: userData.userId,
+      userName: userData.name,
+      userRole: userData.role,
+    });
+    await user.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = async function getUser(userData) {
+  try {
+    const userMovies = await Movie.find({ _id: { $in: user.diaryEntries } });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = async function updateUser(userData) {
   try {
     let user;
@@ -17,5 +39,3 @@ module.exports = async function updateUser(userData) {
     console.log(error);
   }
 };
-
-module.exports = async function getuser(userDetails) {};
