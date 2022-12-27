@@ -1,24 +1,24 @@
-const express = require("express");
+const express = require('express');
 
-const jwtVerifier = require("./middleware/jwtVerifier");
-const validateToken = require("./middleware/validateToken");
-const updateUser = require("./middleware/updateUser");
-const authorizeUser = require("./middleware/authorizeUser");
-const getTitleToSearch = require("./middleware/getTitleToSearch");
+const jwtVerifier = require('./middleware/jwtVerifier');
+const validateToken = require('./middleware/validateToken');
+const updateUser = require('./middleware/updateUser');
+const authorizeUser = require('./middleware/authorizeUser');
+const getTitleToSearch = require('./middleware/getTitleToSearch');
+
+const User = require('../database/models/user');
+const Movie = require('../database/models/movie');
+
+const getMovieData = require('../domain/getMovieData');
 
 const router = express.Router();
 
-const User = require("../database/models/user");
-const Movie = require("../database/models/movie");
-
-const getMovieData = require("../domain/getMovieData");
-
 router.post(
-  "/api/v1/movie",
+  '/movie',
   jwtVerifier,
   validateToken,
   updateUser,
-  authorizeUser,
+  // authorizeUser,
   getTitleToSearch,
   async (req, res, next) => {
     try {
@@ -28,10 +28,10 @@ router.post(
       const movieEntry = new Movie(entry);
       await movieEntry.save();
       user.diaryEntries.push(movieEntry);
-      if (!user.serviceUsage.counter) {
-        user.serviceUsage.counter = 0;
-      }
-      user.serviceUsage.counter++;
+      // if (!user.serviceUsage.counter) {
+      //   user.serviceUsage.counter = 0;
+      // }
+      // user.serviceUsage.counter++;
       await user.save();
       res.status(200).json({
         message: `Movie: <<${entry.title}>> has been added to the User's Cinephile Diary!`,
@@ -43,7 +43,7 @@ router.post(
 );
 
 router.get(
-  "/api/v1/movies",
+  '/movies',
   jwtVerifier,
   validateToken,
   updateUser,
