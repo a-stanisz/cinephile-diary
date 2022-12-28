@@ -1,6 +1,5 @@
 const User = require('../../database/models/user');
-
-const basicUsersServiceUsageLimit = 5;
+// const basicUsersServiceUsageLimit = 5;
 
 module.exports = async (req, res, next) => {
   try {
