@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "definitions": {},
+  "properties": {
+    "Title": { "type": "string" },
+    "Released": { "type": "string" },
+    "Genre": { "type": "string" },
+    "Director": { "type": "string" },
+    "Response": { "type": "string" },
+    "Error": { "type": "string" }
+  },
+  "required": ["Response"]
+}
