@@ -9,7 +9,7 @@ const getTitleToSearch = require('./middleware/getTitleToSearch');
 const User = require('../database/models/user');
 const Movie = require('../database/models/movie');
 
-const getMovieData = require('../domain/getMovieData');
+const omdb = require('../external/omdb');
 
 const router = express.Router();
 
@@ -24,7 +24,7 @@ router.post(
     try {
       const movieTitle = req.searchStr;
       let user = req.user;
-      const entry = await getMovieData(movieTitle);
+      const entry = await omdb(movieTitle);
       const movieEntry = new Movie(entry);
       await movieEntry.save();
       user.diaryEntries.push(movieEntry);
