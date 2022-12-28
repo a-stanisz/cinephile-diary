@@ -1,4 +1,5 @@
-const User = require("./User");
+const User = require('./User');
+const { AuthorizationError } = require('../shared/errors');
 
 module.exports = function userAuthorization(userData) {
   // let validationSchema;
@@ -14,5 +15,5 @@ module.exports = function userAuthorization(userData) {
   if (isAuthorized) {
     return true;
   }
-  console.log("Authorization error");
+  throw new AuthorizationError(`Error on Userr's Authorization: ${error}`);
 };

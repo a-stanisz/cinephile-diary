@@ -1,9 +1,4 @@
-class AuthorizationError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "AuthorizationError";
-  }
-}
+const { AuthorizationError } = require('../../shared/errors');
 
 module.exports = async (req, res, next) => {
   try {

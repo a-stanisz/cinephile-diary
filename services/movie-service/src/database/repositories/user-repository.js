@@ -1,4 +1,5 @@
-const User = require("../models/user");
+const User = require('../models/user');
+const { DataAccessError } = require('../../shared/errors');
 
 module.exports = async function createUser(userData) {
   try {
@@ -10,7 +11,7 @@ module.exports = async function createUser(userData) {
     });
     await user.save();
   } catch (error) {
-    console.log(error);
+    throw new DataAccessError(`Error on DB-creating a User: ${error}`);
   }
 };
 
@@ -18,7 +19,7 @@ module.exports = async function getUser(userData) {
   try {
     const userMovies = await Movie.find({ _id: { $in: user.diaryEntries } });
   } catch (error) {
-    console.log(error);
+    throw new DataAccessError(`Error on DB-getting a User: ${error}`);
   }
 };
 
@@ -36,6 +37,6 @@ module.exports = async function updateUser(userData) {
       await user.save();
     }
   } catch (error) {
-    console.log(error);
+    throw new DataAccessError(`Error on DB-updating a User: ${error}`);
   }
 };

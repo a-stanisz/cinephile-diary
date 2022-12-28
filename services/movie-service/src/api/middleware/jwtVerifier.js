@@ -1,23 +1,17 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
-
-class AuthenticationError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "AuthenticationError";
-  }
-}
+const { AuthenticationError } = require('../../shared/errors');
 
 module.exports = async (req, res, next) => {
   try {
-    const authHeader = req.get("Authorization");
+    const authHeader = req.get('Authorization');
     if (!authHeader) {
-      throw new AuthenticationError("invalid header");
+      throw new AuthenticationError('invalid header');
     }
-    const providedToken = authHeader.split(" ")[1];
+    const providedToken = authHeader.split(' ')[1];
     req.decodedToken = jwt.verify(String(providedToken), JWT_SECRET);
     if (!req.decodedToken) {
-      throw new AuthenticationError("invalid token");
+      throw new AuthenticationError('invalid token');
     }
   } catch (error) {
     if (error instanceof AuthenticationError) {

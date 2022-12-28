@@ -1,5 +1,5 @@
 const express = require('express');
-const { ValidationError } = require('express-json-validator-middleware');
+const { ValidationError } = require('../shared/errors');
 const diaryRoutes = require('./routes');
 const app = express();
 const dbConnect = require('../database/dbConnect');
