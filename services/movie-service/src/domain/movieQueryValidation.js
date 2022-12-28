@@ -1,6 +1,6 @@
 const { UnknownError } = require('../shared/errors');
 
-const ajv = require('../../shared/ajv-cache');
+const ajv = require('../shared/ajv-cache');
 const movieQuerySchema = require('./movieQuery.schema.json');
 
 module.exports = function movieQueryValidation(requestBody) {
