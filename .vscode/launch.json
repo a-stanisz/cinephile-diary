@@ -10,6 +10,8 @@
       "address": "localhost",
       "localRoot": "${workspaceFolder}/services/movie-service/src",
       "restart": true,
+      "sourceMaps": true,
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }
