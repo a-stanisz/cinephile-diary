@@ -5,7 +5,7 @@ const entrySchema = new Schema(
   {
     title: {
       type: String,
-      // required: true,
+      required: true,
     },
     releaseDate: {
       type: Date,
