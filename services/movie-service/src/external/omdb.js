@@ -3,7 +3,7 @@ const formatISO = require('date-fns/formatISO');
 const { OMDB_APIKEY } = process.env;
 const omdbValidation = require('./omdbValidation');
 
-const { DataAccessError, ValidationError } = require('../shared/errors');
+const { DataAccessError, ValidationError } = require('../shared/AppErrors');
 
 const getMovie = async (title) => {
   try {

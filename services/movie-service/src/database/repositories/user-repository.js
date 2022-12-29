@@ -1,5 +1,5 @@
 const User = require('../models/user');
-const { DataAccessError } = require('../../shared/errors');
+const { DataAccessError } = require('../../shared/AppErrors');
 
 module.exports = async function createUser(userData) {
   try {

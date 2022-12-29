@@ -1,5 +1,5 @@
 const express = require('express');
-const { ValidationError } = require('../shared/errors');
+const { ValidationError } = require('../shared/AppErrors');
 const diaryRoutes = require('./routes');
 const app = express();
 const dbConnect = require('../database/dbConnect');

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const { JWT_SECRET } = process.env;
-const { AuthenticationError } = require('../../shared/errors');
+const { AuthenticationError } = require('../../shared/AppErrors');
 
 module.exports = async (req, res, next) => {
   try {
