@@ -1,18 +1,9 @@
-const ajv = require('../shared/ajv-cache');
 const userSchema = require('./user.schema.json');
-const { UnknownError } = require('../shared/errors');
+const validationSchema = require('../shared/ajv-addSchema');
 
-module.exports = function userValidation(userData) {
-  let validationSchema;
-  validationSchema = ajv.getSchema('user-schema');
-  if (!validationSchema) {
-    ajv.addSchema(userSchema, 'user-schema');
-    validationSchema = ajv.getSchema('user-schema');
-  }
-  if (validationSchema === undefined) {
-    throw new UnknownError('Unexpected validation failure');
-  }
-  const isValid = validationSchema(userData);
+module.exports = function userValidation(requestBody) {
+  const validate = validationSchema(userSchema, 'user-schema');
+  const isValid = validate(requestBody);
   if (isValid) {
     return true;
   }
