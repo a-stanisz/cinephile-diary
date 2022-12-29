@@ -1,5 +1,5 @@
 const userValidation = require('../../domain/userValidation');
-const { ValidationError } = require('../../shared/errors');
+const { ValidationError } = require('../../shared/AppErrors');
 
 module.exports = async (req, res, next) => {
   try {

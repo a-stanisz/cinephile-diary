@@ -1,4 +1,4 @@
-const { UnknownError } = require('../shared/errors');
+const { UnknownError } = require('../shared/AppErrors');
 
 const ajv = require('../shared/ajv-cache');
 const omdbSchema = require('./omdb.schema.json');

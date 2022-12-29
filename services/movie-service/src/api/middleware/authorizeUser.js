@@ -1,4 +1,4 @@
-const { AuthorizationError } = require('../../shared/errors');
+const { AuthorizationError } = require('../../shared/AppErrors');
 
 module.exports = async (req, res, next) => {
   try {

@@ -1,5 +1,5 @@
 const User = require('./User');
-const { AuthorizationError } = require('../shared/errors');
+const { AuthorizationError } = require('../shared/AppErrors');
 
 module.exports = function userAuthorization(userData) {
   // let validationSchema;
