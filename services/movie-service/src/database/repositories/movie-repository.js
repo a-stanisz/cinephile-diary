@@ -1,8 +1,11 @@
-const Movie = require("../models/movie");
+const Movie = require('../models/movie');
 
-module.exports = async function addMovie(entryDetails) {
+async function addMovie(entryDetails) {
   const newMovieEntry = new Movie(entryDetails);
   await newMovieEntry.save();
-};
+  return newMovieEntry;
+}
 
-module.exports = async function getMovie(movieDetails) {};
+function getMovie(movieDetails) {}
+
+module.exports = { addMovie, getMovie };

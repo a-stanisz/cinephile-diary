@@ -13,40 +13,60 @@ const omdb = require('../external/omdb');
 
 const router = express.Router();
 
-router.post(
-  '/movie',
-  jwtVerifier,
-  validateToken,
-  updateUser,
-  // authorizeUser,
-  getTitleToSearch,
-  async (req, res, next) => {
-    try {
-      const movieTitle = req.searchStr;
-      let user = req.user;
-      const entry = await omdb(movieTitle);
-      const movieEntry = new Movie(entry);
-      await movieEntry.save();
-      user.diaryEntries.push(movieEntry);
-      // if (!user.serviceUsage.counter) {
-      //   user.serviceUsage.counter = 0;
-      // }
-      // user.serviceUsage.counter++;
-      await user.save();
-      res.status(200).json({
-        message: `Movie: <<${entry.title}>> has been added to the User's Cinephile Diary!`,
-      });
-    } catch (err) {
-      next(err);
+//
+const { addUserMovie } = require('../domain/useCases');
+
+router.post('/movie', jwtVerifier, async (req, res, next) => {
+  try {
+    const userLoginData = req.decodedToken;
+    if (!req.body) {
+      return res.status(400).json({ error: 'invalid payload' });
     }
+    const movieQuery = req.body;
+    const addMovieResponse = await addUserMovie(userLoginData, movieQuery);
+    return res
+      .status(addMovieResponse.statusCode)
+      .json({ message: addMovieResponse.body });
+  } catch (error) {
+    next(error);
+    return undefined;
   }
-);
+});
+
+// router.post(
+//   '/movie',
+//   jwtVerifier,
+//   validateToken,
+//   updateUser,
+//   // authorizeUser,
+//   getTitleToSearch,
+//   async (req, res, next) => {
+//     try {
+//       const movieTitle = req.searchStr;
+//       let user = req.user;
+//       const entry = await omdb(movieTitle);
+//       const movieEntry = new Movie(entry);
+//       await movieEntry.save();
+//       user.diaryEntries.push(movieEntry);
+//       // if (!user.serviceUsage.counter) {
+//       //   user.serviceUsage.counter = 0;
+//       // }
+//       // user.serviceUsage.counter++;
+//       await user.save();
+//       res.status(200).json({
+//         message: `Movie: <<${entry.title}>> has been added to the User's Cinephile Diary!`,
+//       });
+//     } catch (err) {
+//       next(err);
+//     }
+//   }
+// );
 
 router.get(
   '/movies',
   jwtVerifier,
-  validateToken,
-  updateUser,
+  // validateToken,
+  // updateUser,
   async (req, res, next) => {
     try {
       const userId = req.user.userId;
