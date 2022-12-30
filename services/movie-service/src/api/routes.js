@@ -1,10 +1,6 @@
 const express = require('express');
 
 const jwtVerifier = require('./middleware/jwtVerifier');
-const validateToken = require('./middleware/validateToken');
-const updateUser = require('./middleware/updateUser');
-const authorizeUser = require('./middleware/authorizeUser');
-const getTitleToSearch = require('./middleware/getTitleToSearch');
 
 const User = require('../database/models/user');
 const Movie = require('../database/models/movie');
