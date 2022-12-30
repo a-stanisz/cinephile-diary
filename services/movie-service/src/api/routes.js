@@ -9,11 +9,8 @@ const getTitleToSearch = require('./middleware/getTitleToSearch');
 const User = require('../database/models/user');
 const Movie = require('../database/models/movie');
 
-const omdb = require('../external/omdb');
-
 const router = express.Router();
 
-//
 const { addUserMovie } = require('../domain/useCases');
 
 router.post('/movie', jwtVerifier, async (req, res, next) => {
@@ -32,35 +29,6 @@ router.post('/movie', jwtVerifier, async (req, res, next) => {
     return undefined;
   }
 });
-
-// router.post(
-//   '/movie',
-//   jwtVerifier,
-//   validateToken,
-//   updateUser,
-//   // authorizeUser,
-//   getTitleToSearch,
-//   async (req, res, next) => {
-//     try {
-//       const movieTitle = req.searchStr;
-//       let user = req.user;
-//       const entry = await omdb(movieTitle);
-//       const movieEntry = new Movie(entry);
-//       await movieEntry.save();
-//       user.diaryEntries.push(movieEntry);
-//       // if (!user.serviceUsage.counter) {
-//       //   user.serviceUsage.counter = 0;
-//       // }
-//       // user.serviceUsage.counter++;
-//       await user.save();
-//       res.status(200).json({
-//         message: `Movie: <<${entry.title}>> has been added to the User's Cinephile Diary!`,
-//       });
-//     } catch (err) {
-//       next(err);
-//     }
-//   }
-// );
 
 router.get(
   '/movies',
