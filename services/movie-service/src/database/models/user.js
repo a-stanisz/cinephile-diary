@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
@@ -10,13 +10,17 @@ const userSchema = new Schema(
     userName: String,
     userRole: {
       type: String,
-      required: true,
     },
     diaryEntries: [
       {
-        type: Schema.Types.ObjectId,
-        ref: "Movie",
-        timestamps: true,
+        movie: {
+          type: Schema.Types.ObjectId,
+          ref: 'Movie',
+          createdAt: {
+            type: Date,
+            default: Date.now,
+          },
+        },
       },
     ],
   },
@@ -25,4 +29,4 @@ const userSchema = new Schema(
 
 // userSchema.statics.resetCounter = () => (this.serviceUsage.counter = 0);
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model('User', userSchema);

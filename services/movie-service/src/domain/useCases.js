@@ -4,6 +4,7 @@ const { ValidationError } = require('../shared/AppErrors');
 const {
   updateUser,
   getUser,
+  saveUserMovie,
 } = require('../database/repositories/user-repository');
 const omdb = require('../external/omdb');
 const { addMovie } = require('../database/repositories/movie-repository');
@@ -21,12 +22,16 @@ async function addUserMovie(userLoginData, movieQuery) {
     }
     const title = movieQuery.title;
     await updateUser(userLoginData);
+    // console.log(typeof userLoginData, userLoginData);
     const entry = await omdb(title);
     const user = await getUser(userLoginData);
     // console.log(entry);
     const userMovie = await addMovie(entry);
-    user.diaryEntries.push(userMovie);
-    await updateUser(user);
+    await saveUserMovie(user, userMovie);
+    // console.log(user);
+    // user.diaryEntries.push(userMovie);
+    // console.log(user.diaryEntries);
+    // await updateUser(user);
     response.statusCode = 200;
     response.body = 'success';
     return response;
